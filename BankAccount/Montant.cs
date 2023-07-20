@@ -1,6 +1,6 @@
 ﻿namespace BankAccount;
 
-internal class Montant
+public class Montant
 {
     private readonly int _valeur;
 

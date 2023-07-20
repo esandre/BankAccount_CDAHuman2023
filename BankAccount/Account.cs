@@ -1,6 +1,6 @@
 ﻿namespace BankAccount;
 
-internal class Account
+public class Account
 {
     private readonly ICollection<Opération> _opérations 
         = new List<Opération>();
@@ -12,8 +12,6 @@ internal class Account
         => _opérations
             .OrderByDescending(opération => opération.Date);
 
-    public string Relevé => new RelevéCompte(this).ToString();
-
     public void Déposer(ushort montant)
     {
         _opérations.Add(new Opération(DateTime.Now, new Montant(montant)));
@@ -23,4 +21,20 @@ internal class Account
     {
         _opérations.Add(new Opération(DateTime.Now, new Montant(-montant)));
     }
+
+    public static Account ADécouvertDe(ushort découvert)
+    {
+        var account = new Account();
+        account.Retirer(découvert);
+        return account;
+    }
+
+    public static Account ApprovisionnéAuDépartAvec(ushort provision)
+    {
+        var account = new Account();
+        account.Déposer(provision);
+        return account;
+    }
+
+    private Account(){}
 }

@@ -1,6 +1,6 @@
 ﻿namespace BankAccount;
 
-internal record Opération(DateTime Date, Montant Balance)
+public record Opération(DateTime Date, Montant Balance)
 {
     public bool EstCrédit() => Balance.EstPositif();
 

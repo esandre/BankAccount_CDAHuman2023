@@ -1,4 +1,4 @@
-﻿namespace BankAccount;
+﻿namespace BankAccount.Console;
 
 internal class RelevéCompte
 {
