@@ -1,7 +1,11 @@
+using BankAccount.Web.Composants;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IAccountProvider>(new FakeDataAccountProvider());
 
 var app = builder.Build();
 
