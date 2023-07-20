@@ -11,23 +11,6 @@ internal class RelevéCompte
         _compteARelever = compteARelever;
     }
 
-    private static string PrintLine(
-        Montant montantAprèsOpération, 
-        Opération opération, 
-        out Montant montantAvantOpération)
-    {
-        var balance = opération.Balance;
-        var montantAvecPadding = balance.ToString().PadLeft(11);
-
-        var celluleCrédit = opération.EstCrédit() ? montantAvecPadding : new string(' ', 11);
-        var celluleDébit = opération.EstDébit() ? montantAvecPadding : new string(' ', 11);
-        var soldeAprèsOpération = montantAprèsOpération.ToString().PadLeft(23);
-
-        montantAvantOpération = opération.Annuler(montantAprèsOpération);
-
-        return $"{opération.Date:g}|{celluleCrédit}|{celluleDébit}|{soldeAprèsOpération}|";
-    }
-
     /// <inheritdoc />
     public override string ToString()
     {
@@ -40,7 +23,7 @@ internal class RelevéCompte
 
         var lignesOpération =
             opérationsEnOrdreAntéchronologique
-                .Select(opération => PrintLine(balanceDeFin, opération, out balanceDeFin))
+                .Select(opération => LigneCompte.Print(balanceDeFin, opération, out balanceDeFin))
                 .Reverse();
 
         return string.Join(

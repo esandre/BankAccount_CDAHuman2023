@@ -2,12 +2,19 @@
 
 public record LigneComptePresenter(string Date, string Crédit, string Débit,string SoldeAprèsOpération)
 {
-    public static LigneComptePresenter FromOperation(Opération operation)
+    public static LigneComptePresenter FromOperationAndMontant(
+        Montant montantAprèsOpération,
+        Opération opération,
+        out Montant montantAvantOpération)
     {
-        var date = operation.Date.ToString("f");
-        var crédit = operation.EstCrédit() ? operation.Balance.ToString() : string.Empty;
-        var débit = operation.EstDébit() ? operation.Balance.ToString() : string.Empty;
-        var soldeAprèsOpération = string.Empty;
+        var balance = opération.Balance.ToString();
+
+        var date = opération.Date.ToString("f");
+        var crédit = opération.EstCrédit() ? balance : string.Empty;
+        var débit = opération.EstDébit() ? balance : string.Empty;
+        var soldeAprèsOpération = montantAprèsOpération.ToString();
+
+        montantAvantOpération = opération.Annuler(montantAprèsOpération);
 
         return new LigneComptePresenter(date, crédit, débit, soldeAprèsOpération);
     }
