@@ -2,32 +2,17 @@
 
 internal class Account
 {
-    private const string Header = "Date            |    Crédit |     Débit |";
-
     private readonly ICollection<Opération> _opérations 
         = new List<Opération>();
 
-    private Montant Balance => _opérations
+    public Montant Balance => _opérations
         .Aggregate(Montant.Zéro, (balance, kv) => balance + kv.Balance);
 
-    private static string PrintLine(Opération opération)
-    {
-        var balance = opération.Balance;
-        var montantAvecPadding = balance.ToString().PadLeft(11);
+    public IOrderedEnumerable<Opération> OpérationsEnOrdreChronologique
+        => _opérations
+            .OrderBy(opération => opération.Date);
 
-        var celluleCrédit = opération.EstCrédit() ? montantAvecPadding : new string(' ', 11);
-        var celluleDébit = opération.EstDébit() ? montantAvecPadding : new string(' ', 11);
-
-        return $"{opération.Date:g}|{celluleCrédit}|{celluleDébit}|";
-    }
-
-    public string Relevé => Header +
-                            Environment.NewLine +
-                            string.Join(Environment.NewLine, _opérations
-                                .OrderBy(opération => opération.Date)
-                                .Select(PrintLine)) +
-                            Environment.NewLine +
-                            $"Balance : {Balance}";
+    public string Relevé => new RelevéCompte(this).ToString();
 
     public void Déposer(ushort montant)
     {
