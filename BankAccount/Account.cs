@@ -8,9 +8,9 @@ internal class Account
     public Montant Balance => _opérations
         .Aggregate(Montant.Zéro, (balance, kv) => balance + kv.Balance);
 
-    public IOrderedEnumerable<Opération> OpérationsEnOrdreChronologique
+    public IOrderedEnumerable<Opération> OpérationsEnOrdreAntéchronologique
         => _opérations
-            .OrderBy(opération => opération.Date);
+            .OrderByDescending(opération => opération.Date);
 
     public string Relevé => new RelevéCompte(this).ToString();
 

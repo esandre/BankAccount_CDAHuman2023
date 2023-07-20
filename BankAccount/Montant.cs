@@ -16,6 +16,9 @@ internal class Montant
     public static Montant operator +(Montant a, Montant b)
         => new (a._valeur + b._valeur);
 
+    public static Montant operator -(Montant a, Montant b)
+        => new(a._valeur - b._valeur);
+
     /// <inheritdoc />
     public override string ToString() => _valeur.ToString("C0");
 }

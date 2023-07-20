@@ -11,33 +11,43 @@ internal class RelevéCompte
         _compteARelever = compteARelever;
     }
 
-    private static string PrintLine(Opération opération)
+    private static string PrintLine(
+        Montant montantAprèsOpération, 
+        Opération opération, 
+        out Montant montantAvantOpération)
     {
         var balance = opération.Balance;
         var montantAvecPadding = balance.ToString().PadLeft(11);
 
         var celluleCrédit = opération.EstCrédit() ? montantAvecPadding : new string(' ', 11);
         var celluleDébit = opération.EstDébit() ? montantAvecPadding : new string(' ', 11);
+        var soldeAprèsOpération = montantAprèsOpération.ToString().PadLeft(23);
 
-        return $"{opération.Date:g}|{celluleCrédit}|{celluleDébit}|";
+        montantAvantOpération = opération.Annuler(montantAprèsOpération);
+
+        return $"{opération.Date:g}|{celluleCrédit}|{celluleDébit}|{soldeAprèsOpération}|";
     }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        var opérationsEnOrdreChronologique = _compteARelever
-            .OpérationsEnOrdreChronologique
+        var balanceDeFin = _compteARelever.Balance;
+        var ligneBalanceFinale = $"Balance : {balanceDeFin}";
+
+        var opérationsEnOrdreAntéchronologique = _compteARelever
+            .OpérationsEnOrdreAntéchronologique
             .ToArray();
 
-        var lignesOpération = string.Join(
-            Environment.NewLine,
-            opérationsEnOrdreChronologique.Select(PrintLine)
-        );
+        var lignesOpération =
+            opérationsEnOrdreAntéchronologique
+                .Select(opération => PrintLine(balanceDeFin, opération, out balanceDeFin))
+                .Reverse();
 
-        return Header +
-               Environment.NewLine +
-               lignesOpération +
-               Environment.NewLine +
-               $"Balance : {_compteARelever.Balance}";
+        return string.Join(
+            Environment.NewLine,
+            lignesOpération
+                .Prepend(Header)
+                .Append(ligneBalanceFinale)
+        );
     }
 }
