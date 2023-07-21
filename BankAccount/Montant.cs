@@ -13,6 +13,8 @@ public class Montant
 
     public bool EstPositif() => _valeur >= 0;
 
+    public int ToSignedInteger() => _valeur;
+
     public static Montant operator +(Montant a, Montant b)
         => new (a._valeur + b._valeur);
 

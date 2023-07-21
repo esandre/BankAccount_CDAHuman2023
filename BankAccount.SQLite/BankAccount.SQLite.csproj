@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankAccount.FakeDataProvider\BankAccount.FakeDataProvider.csproj" />
-    <ProjectReference Include="..\BankAccount.SQLite\BankAccount.SQLite.csproj" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BankAccount\BankAccount.csproj" />
   </ItemGroup>
 

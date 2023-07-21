@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2B8306B5-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount.FakeDataProvider", "BankAccount.FakeDataProvider\BankAccount.FakeDataProvider.csproj", "{3DC04798-83B0-4D19-8B44-E9D117B2F32C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount.SQLite", "BankAccount.SQLite\BankAccount.SQLite.csproj", "{6D12E655-454B-470F-9AFC-EB9E28849778}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{3DC04798-83B0-4D19-8B44-E9D117B2F32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DC04798-83B0-4D19-8B44-E9D117B2F32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DC04798-83B0-4D19-8B44-E9D117B2F32C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D12E655-454B-470F-9AFC-EB9E28849778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D12E655-454B-470F-9AFC-EB9E28849778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D12E655-454B-470F-9AFC-EB9E28849778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D12E655-454B-470F-9AFC-EB9E28849778}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{32E15DC9-70AC-466D-833F-1FE93E15D53C} = {BB20942C-30F4-45B5-A3ED-589783E29848}
 		{EE1CE73F-546F-4AEC-AA4D-7923552F4B41} = {BB20942C-30F4-45B5-A3ED-589783E29848}
 		{3DC04798-83B0-4D19-8B44-E9D117B2F32C} = {2B8306B5-DF36-4D48-8C8C-D7EB5B546F60}
+		{6D12E655-454B-470F-9AFC-EB9E28849778} = {2B8306B5-DF36-4D48-8C8C-D7EB5B546F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {492D78E7-732D-4BC2-8223-4B11FAE4DB31}

@@ -1,6 +1,6 @@
 ﻿namespace BankAccount;
 
-public class Account
+public partial class Account
 {
     private readonly ICollection<Opération> _opérations 
         = new List<Opération>();
@@ -14,11 +14,13 @@ public class Account
 
     public void Déposer(ushort montant)
     {
+        Thread.Sleep(TimeSpan.FromSeconds(1));
         _opérations.Add(new Opération(DateTime.Now, new Montant(montant)));
     }
 
     public void Retirer(ushort montant)
     {
+        Thread.Sleep(TimeSpan.FromSeconds(1));
         _opérations.Add(new Opération(DateTime.Now, new Montant(-montant)));
     }
 
