@@ -1,4 +1,4 @@
-﻿namespace BankAccount.Web.Composants;
+﻿namespace BankAccount;
 
 public interface IAccountProvider
 {

@@ -1,5 +1,4 @@
-﻿using BankAccount.Web.Composants;
-using BankAccount.Web.Presenters;
+﻿using BankAccount.Web.Presenters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankAccount.Web.Pages;

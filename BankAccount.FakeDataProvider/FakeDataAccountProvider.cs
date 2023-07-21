@@ -1,4 +1,4 @@
-﻿namespace BankAccount.Desktop.Composants;
+﻿namespace BankAccount.FakeDataProvider;
 
 public class FakeDataAccountProvider : IAccountProvider
 {

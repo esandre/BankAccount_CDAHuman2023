@@ -1,4 +1,5 @@
-using BankAccount.Web.Composants;
+using BankAccount;
+using BankAccount.FakeDataProvider;
 
 var builder = WebApplication.CreateBuilder(args);
 

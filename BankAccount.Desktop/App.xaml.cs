@@ -1,4 +1,4 @@
-﻿using BankAccount.Desktop.Composants;
+﻿using BankAccount.FakeDataProvider;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

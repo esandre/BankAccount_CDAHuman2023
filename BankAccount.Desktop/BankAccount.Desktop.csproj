@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BankAccount.FakeDataProvider\BankAccount.FakeDataProvider.csproj" />
     <ProjectReference Include="..\BankAccount\BankAccount.csproj" />
   </ItemGroup>
 
