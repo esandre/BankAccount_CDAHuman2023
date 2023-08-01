@@ -3,7 +3,7 @@
 public class FakeDataAccountProvider : IAccountProvider
 {
     /// <inheritdoc />
-    public Account Provide()
+    public Task<Account> ProvideAsync(CancellationToken token)
     {
         var account = Account.ApprovisionnéAuDépartAvec(60);
 
@@ -12,6 +12,6 @@ public class FakeDataAccountProvider : IAccountProvider
         account.Déposer(30);
         account.Retirer(150);
 
-        return account;
+        return Task.FromResult(account);
     }
 }
