@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BankAccount.FakeDataProvider\BankAccount.FakeDataProvider.csproj" />
+    <ProjectReference Include="..\BankAccount.SQLite\BankAccount.SQLite.csproj" />
+    <ProjectReference Include="..\BankAccount\BankAccount.csproj" />
   </ItemGroup>
 
 </Project>

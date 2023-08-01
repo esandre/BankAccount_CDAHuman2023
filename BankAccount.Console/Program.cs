@@ -7,7 +7,7 @@ SQLiteProvider accountProvider = new SQLiteProvider();
 {
     var accountAvantStockage = Account.ApprovisionnéAuDépartAvec(850);
     accountAvantStockage.Retirer(300);
-    accountProvider.Persist(accountAvantStockage);
+    await accountProvider.PersistAsync(accountAvantStockage, CancellationToken.None);
 }
 
 {

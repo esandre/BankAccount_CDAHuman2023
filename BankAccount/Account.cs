@@ -14,13 +14,11 @@ public partial class Account
 
     public void Déposer(ushort montant)
     {
-        Thread.Sleep(TimeSpan.FromSeconds(1));
         _opérations.Add(new Opération(DateTime.Now, new Montant(montant)));
     }
 
     public void Retirer(ushort montant)
     {
-        Thread.Sleep(TimeSpan.FromSeconds(1));
         _opérations.Add(new Opération(DateTime.Now, new Montant(-montant)));
     }
 

@@ -2,5 +2,5 @@
 
 public interface IAccountPersister
 {
-    void Persist(Account account);
+    Task PersistAsync(Account account, CancellationToken token);
 }

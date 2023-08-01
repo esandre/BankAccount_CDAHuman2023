@@ -16,14 +16,14 @@ public class SQLiteProvider : IAccountProvider, IAccountPersister
             }
             .ConnectionString;
 
-        using var connection = new SqliteConnection(connString);
-        connection.Open();
+        await using var connection = new SqliteConnection(connString);
+        await connection.OpenAsync(token);
 
         var opérations = new List<Opération>();
 
-        using var selectionCommand = connection.CreateCommand();
+        await using var selectionCommand = connection.CreateCommand();
         selectionCommand.CommandText = "SELECT date, balance FROM operation;";
-        using var reader = selectionCommand.ExecuteReader();
+        await using var reader = await selectionCommand.ExecuteReaderAsync(token);
 
         while (reader.Read())
         {
@@ -38,7 +38,7 @@ public class SQLiteProvider : IAccountProvider, IAccountPersister
     }
 
     /// <inheritdoc />
-    public void Persist(Account account)
+    public async Task PersistAsync(Account account, CancellationToken token)
     {
         var connString = new SqliteConnectionStringBuilder
             {
@@ -47,18 +47,19 @@ public class SQLiteProvider : IAccountProvider, IAccountPersister
             }
             .ConnectionString;
 
-        using var connection = new SqliteConnection(connString);
-        connection.Open();
+        await using var connection = new SqliteConnection(connString);
+        await connection.OpenAsync(token);
 
         var operations = account.OpérationsEnOrdreAntéchronologique
             .Select(op => $"({new DateTimeOffset(op.Date).ToUnixTimeSeconds()},{op.Balance.ToSignedInteger()})");
 
-        using var creationCommand = connection.CreateCommand();
+        await using var creationCommand = connection.CreateCommand();
 
         creationCommand.CommandText =
             "CREATE TABLE IF NOT EXISTS operation(date INTEGER PRIMARY KEY, balance INTEGER NOT NULL);" +
+            "DELETE FROM operation WHERE 1 = 1;" +
             "INSERT INTO operation(date, balance) VALUES " +
             string.Join(',', operations) + ";";
-        creationCommand.ExecuteScalar();
+        await creationCommand.ExecuteScalarAsync(token);
     }
 }
