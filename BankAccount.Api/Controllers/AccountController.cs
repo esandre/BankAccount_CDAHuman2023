@@ -1,5 +1,6 @@
 using BankAccount.Api.Presenters;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace BankAccount.Api.Controllers
 {
@@ -34,9 +35,11 @@ namespace BankAccount.Api.Controllers
         }
 
         [HttpPost("retrait")]
-        public async Task PostRetrait()
+        public async Task PostRetrait(ushort montant, CancellationToken token)
         {
-
+            var account = await _accountProvider.ProvideAsync(token);
+            account.Retirer(montant);
+            await _accountPersister.PersistAsync(account, token);
         }
     }
 }

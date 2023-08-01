@@ -2,7 +2,7 @@
 using BankAccount.Console;
 using BankAccount.SQLite;
 
-SQLiteProvider accountProvider = new SQLiteProvider(new DatabaseParameters(
+var accountProvider = new SQLiteProvider(new DatabaseParameters(
     @"C:\Users\kryza\Documents\Sources\Formations\CDA Human 2023\BankAccount\db.sqlite"));
 
 {
