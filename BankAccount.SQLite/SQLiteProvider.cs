@@ -7,7 +7,7 @@ public class SQLiteProvider : IAccountProvider, IAccountPersister
     private const string Path = @"C:\Users\kryza\Documents\Sources\Formations\CDA Human 2023\BankAccount\db.sqlite";
 
     /// <inheritdoc />
-    public Account Provide()
+    public async Task<Account> ProvideAsync(CancellationToken token)
     {
         var connString = new SqliteConnectionStringBuilder
             {

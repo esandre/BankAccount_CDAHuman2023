@@ -5,18 +5,19 @@ namespace BankAccount.Web.Pages;
 
 public class IndexModel : PageModel
 {
-    public RelevéComptePresenter LignesCompte { get; }
-    public string BalanceFinale { get; }
+    private readonly IAccountProvider _accountProvider;
+    public RelevéComptePresenter LignesCompte => new (Account);
+    public string BalanceFinale => Account.Balance.ToString();
+    public Account Account { get; private set; }
 
     public IndexModel(IAccountProvider accountProvider)
     {
-        var account = accountProvider.Provide();
-        BalanceFinale = account.Balance.ToString();
-        LignesCompte = new RelevéComptePresenter(account);
+        _accountProvider = accountProvider;
+        Account = Account.ApprovisionnéAuDépartAvec(0);
     }
 
-    public void OnGet()
+    public async void OnGet()
     {
-
+        Account = await _accountProvider.ProvideAsync(CancellationToken.None);
     }
 }

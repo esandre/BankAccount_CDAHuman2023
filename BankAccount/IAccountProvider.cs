@@ -2,5 +2,5 @@
 
 public interface IAccountProvider
 {
-    Account Provide();
+    Task<Account> ProvideAsync(CancellationToken token);
 }

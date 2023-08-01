@@ -11,6 +11,6 @@ SQLiteProvider accountProvider = new SQLiteProvider();
 }
 
 {
-    var accountAprèsStockage = accountProvider.Provide();
+    var accountAprèsStockage = await accountProvider.ProvideAsync(CancellationToken.None);
     Console.WriteLine(new RelevéCompte(accountAprèsStockage));
 }
