@@ -4,14 +4,19 @@ namespace BankAccount.SQLite;
 
 public class SQLiteProvider : IAccountProvider, IAccountPersister
 {
-    private const string Path = @"C:\Users\kryza\Documents\Sources\Formations\CDA Human 2023\BankAccount\db.sqlite";
+    private readonly DatabaseParameters _parameters;
+
+    public SQLiteProvider(DatabaseParameters parameters)
+    {
+        _parameters = parameters;
+    }
 
     /// <inheritdoc />
     public async Task<Account> ProvideAsync(CancellationToken token)
     {
         var connString = new SqliteConnectionStringBuilder
             {
-                DataSource = Path,
+                DataSource = _parameters.Path,
                 Mode = SqliteOpenMode.ReadOnly
             }
             .ConnectionString;
@@ -42,7 +47,7 @@ public class SQLiteProvider : IAccountProvider, IAccountPersister
     {
         var connString = new SqliteConnectionStringBuilder
             {
-                DataSource = Path,
+                DataSource = _parameters.Path,
                 Mode = SqliteOpenMode.ReadWriteCreate
             }
             .ConnectionString;

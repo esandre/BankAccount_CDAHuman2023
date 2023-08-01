@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace BankAccount.Api.Presenters;
 

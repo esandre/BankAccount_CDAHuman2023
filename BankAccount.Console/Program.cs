@@ -2,7 +2,8 @@
 using BankAccount.Console;
 using BankAccount.SQLite;
 
-SQLiteProvider accountProvider = new SQLiteProvider();
+SQLiteProvider accountProvider = new SQLiteProvider(new DatabaseParameters(
+    @"C:\Users\kryza\Documents\Sources\Formations\CDA Human 2023\BankAccount\db.sqlite"));
 
 {
     var accountAvantStockage = Account.ApprovisionnéAuDépartAvec(850);
