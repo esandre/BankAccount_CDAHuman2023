@@ -1,25 +1,18 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using BankAccount.Api.Presenters;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace BankAccount.Api.Test
 {
     public class TestAccountApi
     {
-        private readonly TestServer _server;
         private readonly HttpClient _client;
 
         public TestAccountApi()
         {
-            // Arrange
-            _server = new TestServer(
-                new WebHostBuilder()
-                .UseStartup("BankAccount.Api")
-            );
-
-            _client = _server.CreateClient();
+            var applicationFactory = new WebApplicationFactory<Program>();
+            _client = applicationFactory.CreateClient();
         }
 
         [Fact]
@@ -39,11 +32,13 @@ namespace BankAccount.Api.Test
         {
             var résultatConsultationInitiale = await _client.GetAsync("/Account");
             var content = await résultatConsultationInitiale.Content.ReadAsStreamAsync();
-            var relevéCompteInitial = JsonSerializer.Deserialize<RelevéComptePresenter>(content);
-            return relevéCompteInitial!.Last().SoldeAprèsOpération;
+            var relevéCompteInitial = JsonSerializer.Deserialize<LigneCompteContract[]>(content);
+            return relevéCompteInitial!.Last().soldeAprèsOpération;
         }
 
-        private record PostDepotContract(ushort Montant);
+        private record PostDepotContract(ushort montant);
+        
+        private record LigneCompteContract(DateTime date, int crédit, int débit, int soldeAprèsOpération);
 
         [Fact]
         public async Task TestRetraitAvecApiAsync()
@@ -53,8 +48,7 @@ namespace BankAccount.Api.Test
             
             // QUAND on retire 1€
             await _client.PostAsync(
-                "/Account/retrait", 
-                JsonContent.Create(new PostDepotContract(1)));
+                "/Account/retrait?montant=1", new StringContent(string.Empty));
 
             // ALORS le solde après opération diminue d'1€
             var soldeAttendu = soldeAvantOpération - 1;
