@@ -32,8 +32,16 @@ namespace BankAccount.Api.Test
         {
             var résultatConsultationInitiale = await _client.GetAsync("/Account");
             var content = await résultatConsultationInitiale.Content.ReadAsStreamAsync();
+
+            if (!résultatConsultationInitiale.IsSuccessStatusCode)
+                throw new HttpRequestException(
+                    await résultatConsultationInitiale.Content.ReadAsStringAsync(),
+                    null,
+                    résultatConsultationInitiale.StatusCode);
+
             var relevéCompteInitial = JsonSerializer.Deserialize<LigneCompteContract[]>(content)!;
             return relevéCompteInitial.LastOrDefault()?.soldeAprèsOpération ?? 0;
+
         }
 
         private record PostDepotContract(ushort montant);
