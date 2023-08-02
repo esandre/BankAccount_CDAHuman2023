@@ -2,6 +2,13 @@
 
 public partial class Account
 {
+    private readonly IHorloge _horloge;
+
+    private Account(IHorloge horloge)
+    {
+        _horloge = horloge;
+    }
+
     private readonly ICollection<Opération> _opérations 
         = new List<Opération>();
 
@@ -14,27 +21,25 @@ public partial class Account
 
     public void Déposer(ushort montant)
     {
-        _opérations.Add(new Opération(DateTime.Now, new Montant(montant)));
+        _opérations.Add(new Opération(_horloge.Now, new Montant(montant)));
     }
 
     public void Retirer(ushort montant)
     {
-        _opérations.Add(new Opération(DateTime.Now, new Montant(-montant)));
+        _opérations.Add(new Opération(_horloge.Now, new Montant(-montant)));
     }
 
-    public static Account ADécouvertDe(ushort découvert)
+    public static Account ADécouvertDe(ushort découvert, IHorloge horloge)
     {
-        var account = new Account();
+        var account = new Account(horloge);
         account.Retirer(découvert);
         return account;
     }
 
-    public static Account ApprovisionnéAuDépartAvec(ushort provision)
+    public static Account ApprovisionnéAuDépartAvec(ushort provision, IHorloge horloge)
     {
-        var account = new Account();
+        var account = new Account(horloge);
         account.Déposer(provision);
         return account;
     }
-
-    private Account(){}
 }

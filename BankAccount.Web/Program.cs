@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddSingleton<IAccountProvider>(new FakeDataAccountProvider());
+builder.Services.AddSingleton<IHorloge, HorlogeSystème>();
+builder.Services.AddSingleton<IAccountProvider, FakeDataAccountProvider>();
 
 var app = builder.Build();
 

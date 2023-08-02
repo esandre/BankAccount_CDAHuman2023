@@ -10,10 +10,10 @@ public class IndexModel : PageModel
     public string BalanceFinale => Account.Balance.ToString();
     public Account Account { get; private set; }
 
-    public IndexModel(IAccountProvider accountProvider)
+    public IndexModel(IAccountProvider accountProvider, IHorloge horloge)
     {
         _accountProvider = accountProvider;
-        Account = Account.ApprovisionnéAuDépartAvec(0);
+        Account = Account.ApprovisionnéAuDépartAvec(0, horloge);
     }
 
     public async void OnGet()

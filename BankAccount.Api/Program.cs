@@ -35,6 +35,7 @@ public partial class Program
         services.AddSwaggerGen();
 
         services.AddSingleton<SQLiteProvider>();
+        services.AddSingleton<IHorloge, HorlogeSystème>();
         services.AddSingleton<IAccountProvider>(context => context.GetRequiredService<SQLiteProvider>());
         services.AddSingleton<IAccountPersister>(context => context.GetRequiredService<SQLiteProvider>());
         services.AddSingleton(context =>
