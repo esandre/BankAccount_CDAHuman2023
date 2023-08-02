@@ -37,8 +37,10 @@ public partial class Program
         services.AddSingleton<SQLiteProvider>();
         services.AddSingleton<IAccountProvider>(context => context.GetRequiredService<SQLiteProvider>());
         services.AddSingleton<IAccountPersister>(context => context.GetRequiredService<SQLiteProvider>());
-        services.AddSingleton(new DatabaseParameters(
-            @"C:\Users\kryza\Documents\Sources\Formations\CDA Human 2023\BankAccount\db.sqlite")
-        );
+        services.AddSingleton(context =>
+        {
+            var configuration = context.GetRequiredService<IConfiguration>();
+            return new DatabaseParameters(configuration["DatabasePath"]!);
+        });
     }
 }
