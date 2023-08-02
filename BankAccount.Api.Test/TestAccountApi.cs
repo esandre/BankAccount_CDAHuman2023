@@ -32,8 +32,8 @@ namespace BankAccount.Api.Test
         {
             var résultatConsultationInitiale = await _client.GetAsync("/Account");
             var content = await résultatConsultationInitiale.Content.ReadAsStreamAsync();
-            var relevéCompteInitial = JsonSerializer.Deserialize<LigneCompteContract[]>(content);
-            return relevéCompteInitial!.Last().soldeAprèsOpération;
+            var relevéCompteInitial = JsonSerializer.Deserialize<LigneCompteContract[]>(content)!;
+            return relevéCompteInitial.LastOrDefault()?.soldeAprèsOpération ?? 0;
         }
 
         private record PostDepotContract(ushort montant);
@@ -48,10 +48,29 @@ namespace BankAccount.Api.Test
             
             // QUAND on retire 1€
             await _client.PostAsync(
-                "/Account/retrait?montant=1", new StringContent(string.Empty));
+                "/Account/retrait?montant=1", null);
 
             // ALORS le solde après opération diminue d'1€
             var soldeAttendu = soldeAvantOpération - 1;
+            var soldeObtenu = await GetSoldeAprèsDernièreOpérationAsync();
+            Assert.Equal(soldeAttendu, soldeObtenu);
+        }
+
+        [Fact]
+        public async Task TestRetraitsMultiplesAvecApiAsync()
+        {
+            // ETANT DONNE un compte en banque ayant un solde donné
+            var soldeAvantOpération = await GetSoldeAprèsDernièreOpérationAsync();
+
+            // QUAND on retire 1€, 100 fois en même temps
+            var tasks = Enumerable.Range(1, 100)
+                .Select(_ => _client.PostAsync(
+                    "/Account/retrait?montant=1", null));
+
+            await Task.WhenAll(tasks);
+
+            // ALORS le solde après opération diminue d'100€
+            var soldeAttendu = soldeAvantOpération - 100;
             var soldeObtenu = await GetSoldeAprèsDernièreOpérationAsync();
             Assert.Equal(soldeAttendu, soldeObtenu);
         }
